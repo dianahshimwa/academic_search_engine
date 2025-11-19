@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Search Engine</title>
+</head>
+<body>
+    <main class="container">
+        <header>
+            <h1>University Research Paper Finder</h1>
+            <p class="subtitle">Search for your Academic research papers using Semantic Scholar</p>
+        </header>
+
+        <section class="controls">
+            <input id="query" type="search" placeholder="Search by keyword, title, or author">
+            <button id="searchBtn">Search</button>
+
+            <label for="sort">Sort:</label>
+            <select id="sort">
+                <option value="relevance">Relevance</option>
+                <option value="year_desc">Year (new to old)</option>
+                <option value="year_asc">Year (old to new)</option>
+                <option value="citations_desc">Citations (high to low)</option>
+            </select>
+
+            <label for="yearFilter">Year After</label>
+            <input type="number" id="yearFilter" min="1900" max="2100" placeholder="e.g. 2018">
+
+        </section>
+
+        <section id="status" class="status">Ready.</section>
+        <section id="results" class="results"></section>
+
+        <footer>
+            <small>Powered by the Semantic Scholar API</small>
+        </footer>
+
+    </main>
+</body>
+</html>
