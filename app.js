@@ -14,9 +14,10 @@ async function search(query){
     eleStatus.textContent = 'Searching..';
     eleResult.innerHTML = '';
 
+let currentData = [];
+
     try {
-        // Perform fetch to API
-        const url = `https://api.semanticscholar.org/graph/v1/paper/search?query=${encodeURIComponent(query)}&limit=10`;
+        const url = `https://api.semanticscholar.org/graph/v1/paper/search?query=${encodeURIComponent(query)}&limit=50`;
         const res = await fetch(url);
         if(!res.ok) throw new Error(`HTTP ${res.status}`);
         const data = await res.json();
@@ -25,6 +26,9 @@ async function search(query){
             eleStatus.textContent = 'No results.';
             return;
         }
+
+        currentData = data.data;
+        applyFiltersAndSort();
 
         eleStatus.textContent = `Found ${data.total || data.data.length} results`;
         eleResult.innerHTML = data.data.map(p => `
@@ -37,9 +41,16 @@ async function search(query){
                 <p class="abstract">${p.abstract ? p.abstract.slice(0,300) : ''}</p>
             </article>
         `).join('');
+
     } catch (err) {
         eleStatus.textContent = 'Error fetching results';
         eleResult.innerHTML = `<div class="empty">${err.message}</div>`;
         console.error(err);
     }
 }
+
+searchBtn.addEventListener("click", () => search(inputQuery.value));
+
+inputQuery.addEventListener("keypress", (e) => {
+  if (e.key == "Enter") search(inputQuery.value);
+});
